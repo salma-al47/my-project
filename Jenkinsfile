@@ -5,10 +5,7 @@ pipeline {
         DOCKERHUB_CREDENTIALS = credentials('dockerHubCredentials')  // ID des credentials Docker Hub stockés dans Jenkins
         DOCKER_IMAGE_BACKEND = "salmaal/my-project-backend"
         DOCKER_IMAGE_FRONTEND = "salmaal/my-project-frontend"
-        DOCKER_IMAGE_POSTGRES = "postgres:latest"
     }
-
-dockerHubCredentials
 
     stages {
         stage('Checkout') {
@@ -22,7 +19,7 @@ dockerHubCredentials
             steps {
                 script {
                     dir('./') {
-                        sh 'docker build -t ${DOCKER_IMAGE_BACKEND} -f dockerfileboot .'
+                        sh "docker build -t ${DOCKER_IMAGE_BACKEND} -f dockerfileboot ."
                     }
                 }
             }
@@ -32,7 +29,7 @@ dockerHubCredentials
             steps {
                 script {
                     dir('./src/main/webapp/reactjs/') {
-                        sh 'docker build -t ${DOCKER_IMAGE_FRONTEND} -f dockerfilejs .'
+                        sh "docker build -t ${DOCKER_IMAGE_FRONTEND} -f dockerfilejs ."
                     }
                 }
             }
@@ -41,8 +38,8 @@ dockerHubCredentials
         stage('Push Backend Image') {
             steps {
                 script {
-                    docker.withRegistry('', 'dockerhub-credentials') {
-                        sh 'docker push ${DOCKER_IMAGE_BACKEND}'
+                    docker.withRegistry('', DOCKERHUB_CREDENTIALS) {
+                        sh "docker push ${DOCKER_IMAGE_BACKEND}"
                     }
                 }
             }
@@ -51,10 +48,11 @@ dockerHubCredentials
         stage('Push Frontend Image') {
             steps {
                 script {
-                    docker.withRegistry('', 'dockerhub-credentials') {
-                        sh 'docker push ${DOCKER_IMAGE_FRONTEND}'
+                    docker.withRegistry('', DOCKERHUB_CREDENTIALS) {
+                        sh "docker push ${DOCKER_IMAGE_FRONTEND}"
                     }
                 }
             }
         }
     }
+}
