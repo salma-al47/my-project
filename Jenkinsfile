@@ -15,7 +15,7 @@ pipeline {
             }
         }
         
-         stage('Build JAR') {
+        stage('Build JAR') {
             steps {
                 script {
                     dir('./') {
@@ -26,8 +26,6 @@ pipeline {
             }
         }
 
-
-        
         stage('Build Backend Image') {
             steps {
                 script {
@@ -48,8 +46,6 @@ pipeline {
             }
         }
 
-
-
         stage('Push the image') {
             steps {
                 withCredentials([usernamePassword(credentialsId: 'dockerHubCredentials', passwordVariable: 'DOCKER_PASSWORD', usernameVariable: 'DOCKER_USERNAME')]) {
@@ -58,6 +54,6 @@ pipeline {
                     sh "docker push ${DOCKER_IMAGE_FRONTEND}:${env.BUILD_NUMBER}"
                 }
             }
-        }
-
-
+        } // Assurez-vous que cette accolade est présente
+    } // Ici aussi
+} // Et ici
