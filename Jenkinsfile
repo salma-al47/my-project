@@ -11,7 +11,7 @@ pipeline {
         stage('Checkout') {
             steps {
                 // Clone du repo Git
-                git 'https://github.com/salma-al47/my-project.git'
+                git branch: 'main', url: 'https://github.com/salma-al47/my-project.git'
             }
         }
 
