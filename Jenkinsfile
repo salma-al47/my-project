@@ -50,10 +50,10 @@ pipeline {
             steps {
                 withCredentials([usernamePassword(credentialsId: 'dockerHubCredentials', passwordVariable: 'DOCKER_PASSWORD', usernameVariable: 'DOCKER_USERNAME')]) {
                     sh 'docker login -u ${DOCKER_USERNAME} -p ${DOCKER_PASSWORD}'
-                    sh "docker push ${DOCKER_IMAGE_BACKEND}:${env.BUILD_NUMBER}"
-                    sh "docker push ${DOCKER_IMAGE_FRONTEND}:${env.BUILD_NUMBER}"
+                    sh "docker push ${DOCKER_IMAGE_BACKEND}"
+                    sh "docker push ${DOCKER_IMAGE_FRONTEND}"
                 }
             }
-        } // Assurez-vous que cette accolade est présente
-    } // Ici aussi
-} // Et ici
+        } 
+    } 
+} 
