@@ -14,7 +14,20 @@ pipeline {
                 git branch: 'main', url: 'https://github.com/salma-al47/my-project.git'
             }
         }
+        
+         stage('Build JAR') {
+            steps {
+                script {
+                    dir('./') {
+                        // Construction du projet avec Maven
+                        sh 'mvn clean package'
+                    }
+                }
+            }
+        }
 
+
+        
         stage('Build Backend Image') {
             steps {
                 script {
